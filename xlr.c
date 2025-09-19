@@ -55,7 +55,7 @@ int main() {
     
     // 月上起日
     int mid = (start + month - 1) % 6;
-    
+
     // 日上起日
     mid = (mid + day - 1) % 6;
     
