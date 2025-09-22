@@ -1,1 +1,81 @@
+# C/C++项目通用.gitignore
+
+# 编译产物
+*.exe
+*.out
+*.app
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# 可执行文件
+/[Dd]ebug/
+/[Rr]elease/
+/[Bb]uild/
+/bin/
+/obj/
+
+# IDE配置文件
+.vscode/
+.idea/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.ncb
+*.sdf
+
+# 编辑器临时文件
+*~
+*.swp
+*.swo
+*#
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 日志文件
+*.log
+logs/
+
+# 依赖目录
+node_modules/
+vendor/
+
+# 本地配置文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 2048游戏特定文件
+.2048_config
+.2048_save
+game_2048.exe
+2048.exe
+
+# 其他临时文件
+*.tmp
+*.temp
+
+# 项目特定排除（保留现有规则）
 .vscode/tasks.json
+day8hk/2048v2.exe
+day8hk/T2048v1.exe

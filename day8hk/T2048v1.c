@@ -70,7 +70,7 @@ void addRandomTile() {
  * 清屏后显示当前得分和棋盘状态
  */
 void printBoard() {
-    system("cls");  // 清屏
+    system("cls||clear");  // 清屏
     printf("2048 Game - Score: %d\n\n", score);
 
     // 打印棋盘
