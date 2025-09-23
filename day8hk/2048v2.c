@@ -6,18 +6,18 @@
 #define SIZE 4
 
 // 修正颜色定义格式
-#define COLOR_RESET   "\033[0m"
-#define COLOR_2       "\033[38;5;226m"
-#define COLOR_4       "\033[38;5;45m"
-#define COLOR_8       "\033[38;5;220m"
-#define COLOR_16      "\033[1;38;5;33m"
-#define COLOR_32      "\033[1;38;5;214m"
-#define COLOR_64      "\033[1;38;5;21m"
-#define COLOR_128     "\033[1;38;5;208m"
-#define COLOR_256     "\033[1;4;38;5;17m"
-#define COLOR_512     "\033[1;4;38;5;202m"
-#define COLOR_1024    "\033[1;4;38;5;93m"
-#define COLOR_2048    "\033[1;4;5;38;5;196m"
+#define COLOR_RESET "\033[0m"
+#define COLOR_2 "\033[38;5;226m"
+#define COLOR_4 "\033[38;5;45m"
+#define COLOR_8 "\033[38;5;220m"
+#define COLOR_16 "\033[1;38;5;33m"
+#define COLOR_32 "\033[1;38;5;214m"
+#define COLOR_64 "\033[1;38;5;21m"
+#define COLOR_128 "\033[1;38;5;208m"
+#define COLOR_256 "\033[1;4;38;5;17m"
+#define COLOR_512 "\033[1;4;38;5;202m"
+#define COLOR_1024 "\033[1;4;38;5;93m"
+#define COLOR_2048 "\033[1;4;5;38;5;196m"
 
 int board[SIZE][SIZE];
 int score = 0;
@@ -120,30 +120,54 @@ void printBoard()
     {
       if (board[i][j] == 0)
       {
-        printf("\t.\t" );
+        printf("\t.\t");
       }
       else
       {
         // 根据数字值设置颜色
-        switch (board[i][j]) {
-          case 2:    printf("%s\t2\t%s", COLOR_2, COLOR_RESET); break;
-          case 4:    printf("%s\t4\t%s", COLOR_4, COLOR_RESET); break;
-          case 8:    printf("%s\t8\t%s", COLOR_8, COLOR_RESET); break;
-          case 16:   printf("%s\t16\t%s", COLOR_16, COLOR_RESET); break;
-          case 32:   printf("%s\t32\t%s", COLOR_32, COLOR_RESET); break;
-          case 64:   printf("%s\t64\t%s", COLOR_64, COLOR_RESET); break;
-          case 128:  printf("%s\t128\t%s", COLOR_128, COLOR_RESET); break;
-          case 256:  printf("%s\t256\t%s", COLOR_256, COLOR_RESET); break;
-          case 512:  printf("%s\t512\t%s", COLOR_512, COLOR_RESET); break;
-          case 1024: printf("%s\t1024\t%s", COLOR_1024, COLOR_RESET); break;
-          case 2048: printf("%s\t2048\t%s", COLOR_2048, COLOR_RESET); break;
-          default:   printf("\t%d\t", board[i][j]);  // 默认颜色
+        switch (board[i][j])
+        {
+        case 2:
+          printf("%s\t2\t%s", COLOR_2, COLOR_RESET);
+          break;
+        case 4:
+          printf("%s\t4\t%s", COLOR_4, COLOR_RESET);
+          break;
+        case 8:
+          printf("%s\t8\t%s", COLOR_8, COLOR_RESET);
+          break;
+        case 16:
+          printf("%s\t16\t%s", COLOR_16, COLOR_RESET);
+          break;
+        case 32:
+          printf("%s\t32\t%s", COLOR_32, COLOR_RESET);
+          break;
+        case 64:
+          printf("%s\t64\t%s", COLOR_64, COLOR_RESET);
+          break;
+        case 128:
+          printf("%s\t128\t%s", COLOR_128, COLOR_RESET);
+          break;
+        case 256:
+          printf("%s\t256\t%s", COLOR_256, COLOR_RESET);
+          break;
+        case 512:
+          printf("%s\t512\t%s", COLOR_512, COLOR_RESET);
+          break;
+        case 1024:
+          printf("%s\t1024\t%s", COLOR_1024, COLOR_RESET);
+          break;
+        case 2048:
+          printf("%s\t2048\t%s", COLOR_2048, COLOR_RESET);
+          break;
+        default:
+          printf("\t%d\t", board[i][j]); // 默认颜色
         }
       }
       printf(" ");
     }
     printf("\n");
-    printf("\n\n\n"); 
+    printf("\n\n\n");
   }
 }
 
@@ -182,7 +206,7 @@ int move(int direction)
             {
               if (he[z][0] == i && he[z][1] == (k - 1))
               {
-                flag = 1;//判断已合并过
+                flag = 1; // 判断已合并过
               }
             }
             if (!flag)
@@ -223,18 +247,18 @@ int move(int direction)
             {
               if (he[z][0] == i && he[z][1] == (k + 1))
               {
-                flag = 1;//判断已合并过
+                flag = 1; // 判断已合并过
               }
             }
             if (!flag)
             {
-            board[i][k + 1] *= 2;
-            score += board[i][k + 1];
-             he[count][0] = i;
+              board[i][k + 1] *= 2;
+              score += board[i][k + 1];
+              he[count][0] = i;
               he[count][1] = (k + 1);
               count++;
-            board[i][k] = 0;
-            moved = 1;
+              board[i][k] = 0;
+              moved = 1;
             }
           }
         }
@@ -262,20 +286,20 @@ int move(int direction)
             int flag = 0;
             for (int z = 0; z < count; z++)
             {
-              if (he[z][0] == (k - 1) && he[z][1] ==j )
+              if (he[z][0] == (k - 1) && he[z][1] == j)
               {
-                flag = 1;//判断已合并过
+                flag = 1; // 判断已合并过
               }
             }
             if (!flag)
             {
-            board[k - 1][j] *= 2;
-            score += board[k - 1][j];
-             he[count][0] = (k - 1);
-              he[count][1] =j ;
+              board[k - 1][j] *= 2;
+              score += board[k - 1][j];
+              he[count][0] = (k - 1);
+              he[count][1] = j;
               count++;
-            board[k][j] = 0;
-            moved = 1;
+              board[k][j] = 0;
+              moved = 1;
             }
           }
         }
@@ -305,18 +329,18 @@ int move(int direction)
             {
               if (he[z][0] == (k + 1) && he[z][1] == j)
               {
-                flag = 1;//判断已合并过
+                flag = 1; // 判断已合并过
               }
             }
             if (!flag)
             {
-            board[k + 1][j] *= 2;
-            score += board[k + 1][j];
-             he[count][0] = (k + 1);
+              board[k + 1][j] *= 2;
+              score += board[k + 1][j];
+              he[count][0] = (k + 1);
               he[count][1] = j;
               count++;
-            board[k][j] = 0;
-            moved = 1;
+              board[k][j] = 0;
+              moved = 1;
             }
           }
         }
@@ -329,16 +353,15 @@ int move(int direction)
 int isGameover()
 {
 
-   for (int i = 0; i < SIZE; i++)
+  for (int i = 0; i < SIZE; i++)
   {
     for (int j = 0; j < SIZE; j++)
     {
-      if (board[i][j]==2048)
+      if (board[i][j] == 2048)
       {
         printf("合成了2048\nWe are the champion!!!\n");
         return 1;
       }
-      
     }
   }
   for (int i = 0; i < SIZE; i++)
@@ -373,7 +396,6 @@ int isGameover()
       }
     }
   }
-  
-  
+
   return 1;
 }
