@@ -51,13 +51,12 @@ int main(int argc, char const *argv[])
     if (move(fx))
     {
       addNum();
-     
     }
-     if (isGameover())
-      {
-        printf("游戏结束！！");
-        break;
-      }
+    if (isGameover())
+    {
+      printf("游戏结束！！");
+      break;
+    }
   }
   return 0;
 }
@@ -127,6 +126,9 @@ int move(int direction)
   2 上
   3 下
   */
+
+  int he[SIZE * SIZE / 2][2]; // 已合并的位置
+  int count = 0;
   int moved = 0;
   if (direction == 0) // 左移
   {
@@ -146,10 +148,24 @@ int move(int direction)
           }
           if (k > 0 && board[i][k - 1] == board[i][k])
           {
-            board[i][k - 1] *= 2;
-            score += board[i][k - 1];
-            board[i][k] = 0;
-            moved = 1;
+            int flag = 0;
+            for (int z = 0; z < count; z++)
+            {
+              if (he[z][0] == i && he[z][1] == (k - 1))
+              {
+                flag = 1;//判断已合并过
+              }
+            }
+            if (!flag)
+            {
+              board[i][k - 1] *= 2;
+              he[count][0] = i;
+              he[count][1] = (k - 1);
+              count++;
+              score += board[i][k - 1];
+              board[i][k] = 0;
+              moved = 1;
+            }
           }
         }
       }
@@ -164,19 +180,33 @@ int move(int direction)
         if (board[i][j] != 0)
         {
           int k = j;
-          while (k < SIZE-1 && board[i][k + 1] == 0)
+          while (k < SIZE - 1 && board[i][k + 1] == 0)
           {
             board[i][k + 1] = board[i][k];
             board[i][k] = 0;
             k++;
             moved = 1;
           }
-          if (k < SIZE -1 && board[i][k + 1] == board[i][k])
+          if (k < SIZE - 1 && board[i][k + 1] == board[i][k])
           {
+            int flag = 0;
+            for (int z = 0; z < count; z++)
+            {
+              if (he[z][0] == i && he[z][1] == (k + 1))
+              {
+                flag = 1;//判断已合并过
+              }
+            }
+            if (!flag)
+            {
             board[i][k + 1] *= 2;
             score += board[i][k + 1];
+             he[count][0] = i;
+              he[count][1] = (k + 1);
+              count++;
             board[i][k] = 0;
             moved = 1;
+            }
           }
         }
       }
@@ -200,10 +230,24 @@ int move(int direction)
           }
           if (k > 0 && board[k - 1][j] == board[k][j])
           {
+            int flag = 0;
+            for (int z = 0; z < count; z++)
+            {
+              if (he[z][0] == (k - 1) && he[z][1] ==j )
+              {
+                flag = 1;//判断已合并过
+              }
+            }
+            if (!flag)
+            {
             board[k - 1][j] *= 2;
             score += board[k - 1][j];
+             he[count][0] = (k - 1);
+              he[count][1] =j ;
+              count++;
             board[k][j] = 0;
             moved = 1;
+            }
           }
         }
       }
@@ -218,19 +262,33 @@ int move(int direction)
         if (board[i][j] != 0)
         {
           int k = i;
-          while (k < SIZE-1 && board[k + 1][j] == 0)
+          while (k < SIZE - 1 && board[k + 1][j] == 0)
           {
             board[k + 1][j] = board[k][j];
             board[k][j] = 0;
             k++;
             moved = 1;
           }
-          if (k < SIZE-1 && board[k + 1][j] == board[k][j])
+          if (k < SIZE - 1 && board[k + 1][j] == board[k][j])
           {
+            int flag = 0;
+            for (int z = 0; z < count; z++)
+            {
+              if (he[z][0] == (k + 1) && he[z][1] == j)
+              {
+                flag = 1;//判断已合并过
+              }
+            }
+            if (!flag)
+            {
             board[k + 1][j] *= 2;
             score += board[k + 1][j];
+             he[count][0] = (k + 1);
+              he[count][1] = j;
+              count++;
             board[k][j] = 0;
             moved = 1;
+            }
           }
         }
       }
