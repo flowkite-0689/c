@@ -34,12 +34,17 @@ int main(int argc, char const *argv[])
 
   init();
   // printBoard();
+  int flagsx = 1;
   for (;;)
   {
-    system("cls||clear");
-    printf("合成%s\t2048\t%s以获取胜利\n", COLOR_2048, COLOR_RESET);
-    printf("\t分数：%d\n\twsad(上下左右)，q(退出)\n", score);
-    printBoard();
+
+    if (flagsx)
+    {
+      system("cls||clear");
+      printf("合成%s\t2048\t%s以获取胜利\n", COLOR_2048, COLOR_RESET);
+      printf("\t分数：%d\n\twsad(上下左右)，q(退出)\n", score);
+      printBoard();
+    }
     int fx = -1;
     char input = getch();
     if (input == 'a' || input == 'A')
@@ -58,14 +63,22 @@ int main(int argc, char const *argv[])
     {
       fx = 3;
     }
-    else
+    else if (input == 'q' || input == 'Q')
     {
       printf("退出游戏~\n```");
       break;
     }
+    else
+    {
+    }
     if (move(fx))
     {
+      flagsx = 1;
       addNum();
+    }
+    else
+    {
+      flagsx = 0;
     }
     if (isGameover())
     {
