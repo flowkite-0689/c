@@ -45,14 +45,17 @@ void userLogin()
     bAL *head = readListFromFile("accounts.dat");
     if (head == NULL) {
         printf("账户文件不存在或为空\n");
+        system("pause");
         return;
     }
 
     if (verifyPassword(head, account, password)) {
         printf("登录成功！\n");
+        system("pause");
         // 这里应该进入用户操作菜单
     } else {
         printf("账号或密码错误！\n");
+        system("pause");
     }
 }
 
@@ -61,11 +64,13 @@ int changePassword(bAL* head, int account, char *pw_t)
     bAL *node = searchByAccount(head, account);
     if (node == NULL) {
         printf("账户不存在\n");
+        system("pause");
         return 0;
     }
 
     strcpy(node->data.password, pw_t);
     writeListToFile(head, "accounts.dat");
     printf("密码修改成功！\n");
+    system("pause");
     return 1;
 }

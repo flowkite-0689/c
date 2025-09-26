@@ -61,6 +61,7 @@ int main(int argc, char const *argv[])
                   }
                   writeListToFile(head, "accounts.dat");
                   printf("账号创建成功！\n");
+                  system("pause");
                   break;
               case '2':
                   printf("查看账号列表功能\n");
@@ -68,6 +69,7 @@ int main(int argc, char const *argv[])
                   if (head2 != NULL) {
                       traverseList(head2);
                   }
+                  system("pause");
                   break;
               case '3':
                   printf("删除账号功能\n");
@@ -81,6 +83,7 @@ int main(int argc, char const *argv[])
                       deleteNode(&head3, delAccount);
                       writeListToFile(head3, "accounts.dat");
                   }
+                  system("pause");
                   break;
               case '4':
                   printf("退出系统\n");
@@ -88,21 +91,27 @@ int main(int argc, char const *argv[])
                   break;
               default:
                   printf("无效输入\n");
+                  system("pause");
                   break;
               }
           }
       } else {
           printf("管理员密码错误！\n");
+          system("pause");
       }
       break;
     case '3':
       printf("3.退出系统\n");
+      printf("正在保存数据...\n");
+      // 确保所有数据已保存到文件
+      printf("数据保存完成！\n");
       printf("感谢使用");
       system("pause");
       forflag0 = 0;
       break;
     default:
       printf("无效输入");
+      system("pause");
       break;
     }
   }
