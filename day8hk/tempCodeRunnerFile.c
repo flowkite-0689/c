@@ -23,7 +23,7 @@ int searchByphone(ps *p, int count);
 int serachByName(ps *p, int count);
 int addPerson(ps *p, int *pcount);
 int updatePerson(ps *p, int count);
-int deletePerson(ps *p, int *count);
+int deletPerson(ps *p, int *count);
 void showMenu();
 void printPerson(ps ps);
 void printAll(ps *p, int count);
@@ -62,7 +62,7 @@ int main(int argc, char const *argv[])
       }
       else
       {
-        printf("没有找到\n");
+        printf("没有找到");
       }
       system("pause");
       break;
@@ -98,18 +98,17 @@ int main(int argc, char const *argv[])
       forflag = 0;
       printf("感谢使用.");
       system("pause");
-      system("cls||clear");
       break;
     case 8:
       updatePerson(p, count);
       system("pause");
       break;
     case 7:
-      deletePerson(p, &count);
+      deletPerson(p, &count);
       system("pause");
       break;
     default:
-      printf("无效输入，请重新输入");
+      printf("无效输入请重新输入");
       break;
     }
   }
@@ -149,7 +148,7 @@ int loadFromFile(ps *p)
 }
 void showMenu()
 {
-  printf("\n------通讯录------\n");
+  printf("\n---通讯录管理系统---\n");
   printf("1、添加联系人\n");
   printf("2、显示所有联系人\n");
   printf("3、按姓名查找\n");
@@ -203,10 +202,10 @@ int addPerson(ps *p, int *pcount)
   cib();
 
   (*pcount)++;
-  printf("添加联系人成功，当前有%d个联系人。\n", *pcount);
+  printf("添加联系人成功，当前有%d个联系人。", *pcount);
   return 1;
 }
-int deletePerson(ps *p, int *count)
+int deletPerson(ps *p, int *count)
 {
 
   printAll(p, *count);
@@ -216,7 +215,7 @@ int deletePerson(ps *p, int *count)
   cib();
   if (index < 0 || index >= *count)
   {
-    printf("没有该序号的联系人，删除失败。\n");
+    printf("没有该序号的联系人，删除失败。");
     return 0;
   }
 
@@ -237,7 +236,7 @@ int updatePerson(ps *p, int count)
   cib();
   if (index < 0 || index >= count)
   {
-    printf("没有该序号的联系人，修改失败。\n");
+    printf("没有该序号的联系人，修改失败。");
     return 0;
   }
   printf("输入学号：\n");
@@ -259,7 +258,7 @@ int updatePerson(ps *p, int count)
 }
 int serachByName(ps *p, int count)
 {
-  printf("输入要查找的联系人的名字：\n");
+  printf("输入要查找的联系人的名字：");
   char name[10];
   scanf("%s", name);
   cib();
@@ -274,7 +273,7 @@ int serachByName(ps *p, int count)
 }
 int searchByphone(ps *p, int count)
 {
-  printf("输入要查找的联系人的电话号码：\n");
+  printf("输入要查找的联系人的电话号码：");
   char phone[12];
   scanf("%s", phone);
   cib();
