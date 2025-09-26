@@ -1,7 +1,7 @@
 #include "../include/numandop.h"
 
 /**
- * @brief 将表达式分割成令牌（数字和运算符）
+ * @brief 将表达式分割成数字和运算符
  */
 char** tokenize(const char* expr, int* token_count) {
     int len = strlen(expr);
@@ -47,7 +47,7 @@ bool is_number(const char* s) {
 }
 
 /**
- * @brief 将中缀表达式转换为后缀表达式（逆波兰表示法）
+ * @brief 将中缀表达式转换为后缀表达式
  */
 char** infix_to_postfix(char** tokens, int token_count, int* postfix_count) {
     char** postfix = (char**)malloc(token_count * sizeof(char*));

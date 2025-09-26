@@ -32,7 +32,7 @@ int verifyPassword(char *pw_t)
 
     char inter[18];
     scanf("%s", inter);
-    cib;
+    cib();
     if (strcmp(pw_t, inter))
     {
       if (i != 2)

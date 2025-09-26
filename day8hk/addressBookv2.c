@@ -110,6 +110,7 @@ int main(int argc, char const *argv[])
       break;
     default:
       printf("无效输入，请重新输入");
+      system("pause");
       break;
     }
   }
