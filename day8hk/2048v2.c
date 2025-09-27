@@ -22,68 +22,57 @@
 int board[SIZE][SIZE];
 int score = 0;
 
+typedef struct historyScore
+{
+  char name[5];
+  int score;
+} HS;
+
 // 函数
-void addNum();     // 添加数字
-void printBoard(); // 打印界面
-void init();       // 初始化
-int move(int);     // 移动
-int isGameover();  // 游戏结束判定
+void addNum();                    // 添加数字
+void printBoard();                // 打印界面
+void init();                      // 初始化
+int move(int);                    // 移动
+int isGameover();                 // 游戏结束判定
+void saveToFile(HS *, int);       // 保存到文件
+int loadFromFile(HS *);           // 从文件加载
+void starGame(HS *, int);         // 开始游戏
+void showHistoryScore(HS *, int); // 查看历史分数
 
 int main(int argc, char const *argv[])
 {
-
-  init();
-  // printBoard();
-  int flagsx = 1;
-  for (;;)
+  int count = 0;
+  HS hs[100];
+  count = loadFromFile(hs);
+  srand(time(NULL)); // 随机种子
+  int forflag0 = 1;
+  for (; forflag0;)
   {
-
-    if (flagsx)
+    count = loadFromFile(hs);
+    system("cls||clear");
+    printf("\t\t\t\t2048\t\t\t\n");
+    printf("1.开始游戏\n");
+    printf("2.查看历史记录\n");
+    printf("3.退出游戏\n");
+    printf("-----------------------\n");
+    char c = getch();
+    if (c == '1')
     {
-      system("cls||clear");
-      printf("合成%s\t2048\t%s以获取胜利\n", COLOR_2048, COLOR_RESET);
-      printf("\t分数：%d\n\twsad(上下左右)，q(退出)\n", score);
-      printBoard();
+      starGame(hs, count);
     }
-    int fx = -1;
-    char input = getch();
-    if (input == 'a' || input == 'A')
+    else if (c == '2')
     {
-      fx = 0;
+      showHistoryScore(hs, count);
     }
-    else if (input == 'd' || input == 'D')
+    else if (c == '3')
     {
-      fx = 1;
-    }
-    else if (input == 'w' || input == 'W')
-    {
-      fx = 2;
-    }
-    else if (input == 's' || input == 'S')
-    {
-      fx = 3;
-    }
-    else if (input == 'q' || input == 'Q')
-    {
-      printf("退出游戏~\n```");
-      break;
+      printf("退出游戏\n");
+      forflag0=0;
+      system("pause");
     }
     else
     {
-    }
-    if (move(fx))
-    {
-      flagsx = 1;
-      addNum();
-    }
-    else
-    {
-      flagsx = 0;
-    }
-    if (isGameover())
-    {
-      printf("游戏结束！！\n```");
-      break;
+      printf("无效输入");
     }
   }
   return 0;
@@ -114,6 +103,7 @@ void addNum()
 
 void init()
 {
+
   for (int i = 0; i < SIZE; i++)
   {
     for (int j = 0; j < SIZE; j++)
@@ -411,4 +401,132 @@ int isGameover()
   }
 
   return 1;
+}
+void saveToFile(HS *hs, int count)
+{
+  FILE *file = fopen("2048v2.dat", "wb");
+  if (file == NULL)
+  {
+    printf("无文件");
+    return;
+  }
+  fwrite(&count, sizeof(int), 1, file);
+  fwrite(hs, sizeof(HS), count, file);
+  fclose(file);
+  printf("文件已经保存");
+}
+
+int loadFromFile(HS *hs)
+{
+  int count = 0;
+  FILE *file = fopen("2048v2.dat", "rb");
+  if (file == NULL)
+  {
+    printf("无法打开文件！\n");
+    return -1;
+  }
+
+  fread(&count, sizeof(int), 1, file);
+  fread(hs, sizeof(HS), count, file);
+  fclose(file);
+  printf("已加载%d条数据\n", count);
+  return count;
+}
+
+void starGame(HS *hs, int count)
+{
+  init();
+  // printBoard();
+  int flagsx = 1;
+  for (;;)
+  {
+
+    if (flagsx)
+    {
+      system("cls||clear");
+      printf("合成%s\t2048\t%s以获取胜利\n", COLOR_2048, COLOR_RESET);
+      printf("\t分数：%d\n\twsad(上下左右)，q(退出)\n\n\n", score);
+      printBoard();
+    }
+
+    if (isGameover())
+    {
+      printf("游戏结束！！\n```");
+
+      printf(" 是否保存记录(yn)\n");
+      char c = getch();
+      if (c == 'y')
+      {
+        printf("请输入记录名称:\t");
+        scanf("%s", &hs[count].name);
+        hs[count].score = score;
+        count++;
+        saveToFile(hs,count);
+      }
+
+      break;
+    }
+    int fx = -1;
+    char input = getch();
+    if (input == 'a' || input == 'A')
+    {
+      fx = 0;
+    }
+    else if (input == 'd' || input == 'D')
+    {
+      fx = 1;
+    }
+    else if (input == 'w' || input == 'W')
+    {
+      fx = 2;
+    }
+    else if (input == 's' || input == 'S')
+    {
+      fx = 3;
+    }
+    else if (input == 'q' || input == 'Q')
+    {
+
+        printf(" 是否保存记录(yn)\n");
+      char c = getch();
+      if (c == 'y')
+      {
+        printf("请输入记录名称:\t");
+        scanf("%s", &hs[count].name);
+        hs[count].score = score;
+        count++;
+        saveToFile(hs,count);
+      }
+      printf("退出游戏~\n```");
+      
+      break;
+    }
+    else
+    {
+    }
+    if (move(fx))
+    {
+      flagsx = 1;
+      addNum();
+    }
+    else
+    {
+      flagsx = 0;
+    }
+  }
+
+  score=0;
+}
+
+void showHistoryScore(HS *hs, int count)
+{
+  printf("历史记录：\n");
+
+  for (int i = 0; i < count; i++)
+  {
+    printf("记录名：\t%s\t分数： \t%d\n", hs[i].name, hs[i].score);
+  }
+  printf("按任意键退出");
+  system("pause");
+
 }

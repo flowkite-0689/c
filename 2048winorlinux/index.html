@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>3D 2048</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
+        canvas { display: block; }
+        #ui {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #game-over {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            background: rgba(0,0,0,0.8);
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            display: none;
+        }
+        button {
+            background: #8f7a66;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #9f8b77;
+        }
+    </style>
+</head>
+<body>
+    <div id="ui">
+        <h1>3D 2048</h1>
+        <p>分数: <span id="score">0</span></p>
+        <p>使用方向键移动X/Y轴，W/S键移动Z轴</p>
+    </div>
+    <div id="game-over">
+        <h2>游戏结束!</h2>
+        <button onclick="resetGame()">重新开始</button>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // 添加加载错误处理
+        window.addEventListener('load', () => {
+            try {
+                // 检查WebGL支持
+                if (!window.WebGLRenderingContext) {
+                    throw new Error('浏览器不支持WebGL');
+                }
+
+                // 检查Three.js是否加载成功
+                if(typeof THREE === 'undefined') {
+                    throw new Error('Three.js库加载失败');
+                }
+
+                // 创建调试信息元素
+                const debugInfo = document.createElement('div');
+                debugInfo.style.position = 'absolute';
+                debugInfo.style.bottom = '10px';
+                debugInfo.style.left = '10px';
+                debugInfo.style.color = 'white';
+                debugInfo.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                debugInfo.style.padding = '5px';
+                debugInfo.style.borderRadius = '3px';
+                debugInfo.textContent = '初始化中...';
+                document.body.appendChild(debugInfo);
+
+                // 延迟加载游戏脚本以确保Three.js已加载
+                const script = document.createElement('script');
+                script.src = 'game.js';
+                document.body.appendChild(script);
+
+                script.onload = () => {
+                    debugInfo.textContent = '游戏加载完成';
+                    setTimeout(() => debugInfo.remove(), 2000);
+                };
+
+                script.onerror = () => {
+                    document.body.innerHTML = '<h1 style="color:red">游戏脚本加载失败，请检查game.js文件是否存在</h1>';
+                };
+            } catch (error) {
+                document.body.innerHTML = `
+                    <h1 style="color:red">初始化错误: ${error.message}</h1>
+                    <p>请检查浏览器控制台(F12)获取更多信息</p>
+                `;
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>

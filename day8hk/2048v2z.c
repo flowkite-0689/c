@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
     {
       system("cls||clear"); // 清屏
       printf("合成%s\t2048\t%s以获取胜利\n", COLOR_2048, COLOR_RESET);
-      printf("\t分数：%d\n\twsad(上下左右)，q(退出)\n", score);
+      printf("\t分数：%d\n\twsad(上下左右)，q(退出)\n\n\n", score);
       printBoard(); // 打印棋盘
     }
 
