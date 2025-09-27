@@ -1,7 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+// 平台检测
+#ifdef _WIN32
+#include <windows.h>
 #include <conio.h>
+#else
+#include <termios.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#endif
 
 #define SIZE 4
 
@@ -38,13 +47,13 @@ void saveToFile(HS *, int);       // 保存到文件
 int loadFromFile(HS *);           // 从文件加载
 void starGame(HS *, int);         // 开始游戏
 void showHistoryScore(HS *, int); // 查看历史分数
-
+int getch(void);                  // 跨平台getch实现
 int main(int argc, char const *argv[])
 {
   int count = 0;
   HS hs[100];
   count = loadFromFile(hs);
-  srand(time(NULL)); // 随机种子
+  srand(time(NULL)); // 添加随机种子
   int forflag0 = 1;
   for (; forflag0;)
   {
@@ -67,7 +76,7 @@ int main(int argc, char const *argv[])
     else if (c == '3')
     {
       printf("退出游戏\n");
-      forflag0=0;
+      forflag0 = 0;
       system("pause");
     }
     else
@@ -402,6 +411,7 @@ int isGameover()
 
   return 1;
 }
+
 void saveToFile(HS *hs, int count)
 {
   FILE *file = fopen("2048v2.dat", "wb");
@@ -461,7 +471,7 @@ void starGame(HS *hs, int count)
         scanf("%s", &hs[count].name);
         hs[count].score = score;
         count++;
-        saveToFile(hs,count);
+        saveToFile(hs, count);
       }
 
       break;
@@ -487,7 +497,7 @@ void starGame(HS *hs, int count)
     else if (input == 'q' || input == 'Q')
     {
 
-        printf(" 是否保存记录(yn)\n");
+      printf(" 是否保存记录(yn)\n");
       char c = getch();
       if (c == 'y')
       {
@@ -495,10 +505,10 @@ void starGame(HS *hs, int count)
         scanf("%s", &hs[count].name);
         hs[count].score = score;
         count++;
-        saveToFile(hs,count);
+        saveToFile(hs, count);
       }
       printf("退出游戏~\n```");
-      
+
       break;
     }
     else
@@ -515,7 +525,7 @@ void starGame(HS *hs, int count)
     }
   }
 
-  score=0;
+  score = 0;
 }
 
 void showHistoryScore(HS *hs, int count)
@@ -528,5 +538,23 @@ void showHistoryScore(HS *hs, int count)
   }
   printf("按任意键退出");
   system("pause");
+}
+// 跨平台getch实现
+int getch(void)
+{
+#ifdef _WIN32
+  return _getch();
+#else
+  struct termios oldt, newt;
+  int ch;
 
+  tcgetattr(STDIN_FILENO, &oldt);
+  newt = oldt;
+  newt.c_lflag &= ~(ICANON | ECHO);
+  tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+  ch = getchar();
+  tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
+  return ch;
+#endif
 }
