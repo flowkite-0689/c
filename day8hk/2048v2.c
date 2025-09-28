@@ -44,10 +44,12 @@ void init();                      // 初始化
 int move(int);                    // 移动
 int isGameover();                 // 游戏结束判定
 void saveToFile(HS *, int);       // 保存到文件
-int loadFromFile(HS *);           // 从文件加载
+int loadFromFile(HS *hs);           // 从文件加载
 void starGame(HS *, int);         // 开始游戏
 void showHistoryScore(HS *, int); // 查看历史分数
 int getch(void);                  // 跨平台getch实现
+
+
 int main(int argc, char const *argv[])
 {
   int count = 0;
@@ -86,6 +88,8 @@ int main(int argc, char const *argv[])
   }
   return 0;
 }
+
+
 void addNum()
 {
   int empty[SIZE * SIZE][2];
@@ -194,7 +198,7 @@ int move(int direction)
 
   int he[SIZE * SIZE / 2][2]; // 已合并的位置
   int count = 0;
-  int moved = 0;
+  int moved = 0;//判断有无移动
   if (direction == 0) // 左移
   {
     for (int i = 0; i < SIZE; i++)
@@ -478,6 +482,7 @@ void starGame(HS *hs, int count)
     }
     int fx = -1;
     char input = getch();
+
     if (input == 'a' || input == 'A')
     {
       fx = 0;
