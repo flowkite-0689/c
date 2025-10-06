@@ -1,93 +1,57 @@
-# C/C++项目通用.gitignore
-
-# 编译产物
+# 编译生成的可执行文件
 *.exe
 *.out
-*.app
 *.o
-*.obj
 *.a
-*.lib
-*.dll
 *.so
-*.dylib
+*.dll
+*.bin
+*.dSYM/
 
-# 可执行文件
-/[Dd]ebug/
-/[Rr]elease/
-/[Bb]uild/
-/bin/
-/obj/
+# 项目特定的可执行文件
+day8hk/2048v2
+2048winorlinux/linux_2048
+test0910/outputArg
 
-# IDE配置文件
-.vscode/
-.idea/
-*.sln
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
-*.suo
-*.ncb
-*.sdf
+# 数据文件
+*.dat
+addressbook.dat
+2048v2.dat
 
-# 编辑器临时文件
-*~
+# 临时文件和日志
+*.log
+*.tmp
 *.swp
 *.swo
-*#
-
-# 系统文件
+*~
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
 
-# 日志文件
-*.log
-logs/
+# IDE特定文件
+.vscode/
+.idea/
+*.code-workspace
 
 # 依赖目录
 node_modules/
-vendor/
+dist/
+build/
 
-# 本地配置文件
+# 其他
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# 测试相关
+/test
+/coverage
+
+# 本地环境文件
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
-# 备份文件
-*.bak
-*.backup
-*.old
-
-# 2048游戏特定文件
-.2048_config
-.2048_save
-game_2048.exe
-2048.exe
-
-# 其他临时文件
-*.tmp
-*.temp
-
-# 项目特定排除（保留现有规则）
-.vscode/tasks.json
-day8hk/2048v2.exe
-day8hk/T2048v1.exe
-day8hk/T2048v1.exe
-day7hk/secondaryMenu.exe
-day7hk/secondaryMenu.exe
-day7hk/strcat.exe
-day7hk/strlen.exe
-day7hk/yh2.exe
-day8hk/addressBook.exe
-day8hk/addressBookv2.dat
-bank/nul
-bank/src/main.c
-bank/accounts.dat
-day8hk/2048v2.dat
+.env.development
+.env.production
