@@ -10,6 +10,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#include <string.h>
 #endif
 
 #define SIZE 4
@@ -436,12 +437,26 @@ int loadFromFile(HS *hs)
   FILE *file = fopen("2048v2.dat", "rb");
   if (file == NULL)
   {
-    printf("无法打开文件！\n");
-    return -1;
+    printf("无历史记录文件，将创建新文件\n");
+    return 0;  // 返回0而不是-1，避免后续处理出错
   }
 
-  fread(&count, sizeof(int), 1, file);
-  fread(hs, sizeof(HS), count, file);
+  // 检查文件读取是否成功
+  if (fread(&count, sizeof(int), 1, file) != 1) {
+    printf("读取记录数失败\n");
+    fclose(file);
+    return 0;
+  }
+
+  // 限制最大记录数防止溢出
+  if (count > 100) count = 100;
+
+  if (fread(hs, sizeof(HS), count, file) != count) {
+    printf("读取记录内容失败\n");
+    fclose(file);
+    return 0;
+  }
+
   fclose(file);
   printf("已加载%d条数据\n", count);
   return count;
@@ -471,8 +486,11 @@ void starGame(HS *hs, int count)
       char c = getch();
       if (c == 'y')
       {
-        printf("请输入记录名称:\t");
-        scanf("%s", &hs[count].name);
+        printf("请输入记录名称(最多4个字符):\t");
+        char buf[10];
+        scanf("%4s", buf);
+        strncpy(hs[count].name, buf, 4);
+        hs[count].name[4] = '\0';
         hs[count].score = score;
         count++;
         saveToFile(hs, count);
@@ -506,8 +524,11 @@ void starGame(HS *hs, int count)
       char c = getch();
       if (c == 'y')
       {
-        printf("请输入记录名称:\t");
-        scanf("%s", &hs[count].name);
+        printf("请输入记录名称(最多4个字符):\t");
+        char buf[10];
+        scanf("%4s", buf);
+        strncpy(hs[count].name, buf, 4);
+        hs[count].name[4] = '\0';
         hs[count].score = score;
         count++;
         saveToFile(hs, count);
@@ -535,14 +556,25 @@ void starGame(HS *hs, int count)
 
 void showHistoryScore(HS *hs, int count)
 {
-  printf("历史记录：\n");
-
-  for (int i = 0; i < count; i++)
-  {
-    printf("记录名：\t%s\t分数： \t%d\n", hs[i].name, hs[i].score);
+  // 按分数排序
+  for (int i = 0; i < count-1; i++) {
+    for (int j = 0; j < count-i-1; j++) {
+      if (hs[j].score < hs[j+1].score) {
+        HS temp = hs[j];
+        hs[j] = hs[j+1];
+        hs[j+1] = temp;
+      }
+    }
   }
-  printf("按任意键退出");
-  system("pause");
+
+  printf("\n历史记录(按分数排序)：\n");
+  printf("排名\t名称\t分数\n");
+  printf("----------------\n");
+  for (int i = 0; i < count; i++) {
+    printf("%d\t%s\t%d\n", i+1, hs[i].name, hs[i].score);
+  }
+  printf("\n按任意键退出");
+  getch(); // 使用跨平台的getch代替system("pause")
 }
 // 跨平台getch实现
 int getch(void)
