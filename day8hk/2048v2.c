@@ -48,7 +48,7 @@ void saveToFile(HS *, int);       // 保存到文件
 int loadFromFile(HS *hs);           // 从文件加载
 void starGame(HS *, int);         // 开始游戏
 void showHistoryScore(HS *, int); // 查看历史分数
-int getch(void);                  // 跨平台getch实现
+int getch(void);                  // 跨平台getch实现q
 
 
 int main(int argc, char const *argv[])
