@@ -1,5 +1,5 @@
 # Makefile for Bank System
-CC = gcc
+CC = aarch64-linux-gcc
 CFLAGS = -Wall -Wextra -std=c99 -Iinclude
 TARGET = bank
 SOURCES = src/main.c src/account.c src/auth.c src/ui.c
